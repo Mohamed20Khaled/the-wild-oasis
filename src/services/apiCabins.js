@@ -1,5 +1,6 @@
 import supabase from "./supabase";
 
+// Get All Capins
 export async function getCabins() {
   const { data, error } = await supabase.from("cabins").select("*");
 
@@ -10,12 +11,25 @@ export async function getCabins() {
   return data;
 }
 
+// Delete Cabin by id
 export async function deleteCabin(id) {
   const { data, error } = await supabase.from("cabins").delete().eq("id", id);
 
   if (error) {
     console.error(error);
     throw new Error("Cabin could not be deleted");
+  }
+
+  return data;
+}
+
+// Create New Cabin
+export async function createCabin(newCabin) {
+  const { data, error } = await supabase.from("cabins").insert([newCabin]);
+
+  if (error) {
+    console.error(error);
+    throw new Error("Cabin could not be created");
   }
 
   return data;
